@@ -2,53 +2,181 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Notificação de Tarefa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembrete de Tarefa Importante</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300,400,700&display=swap');
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f7f7f7;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td {
+            padding: 0;
         }
         .container {
-            width: 80%;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
         .header {
+            background-color: #4A90E2; /* Azul primário */
+            padding: 30px 20px;
             text-align: center;
-            color: #333;
+            color: #ffffff;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
         }
         .content {
-            margin: 20px 0;
+            padding: 30px;
+            color: #333333;
+            line-height: 1.6;
+        }
+        .content h2 {
+            color: #4A90E2;
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .highlight {
+            font-weight: 700;
+            color: #D0021B; /* Vermelho para destaque */
+            background-color: #ffeaea; /* Fundo suave para destaque */
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+        .task-details {
+            background-color: #f9f9f9;
+            border-left: 5px solid #4A90E2;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+        .task-details p {
+            margin: 5px 0;
+        }
+        .task-details strong {
+            color: #333333;
+        }
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .button {
+            display: inline-block;
+            background-color: #50E3C2; /* Verde água para CTA */
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #3fbc9f;
         }
         .footer {
+            background-color: #f0f0f0;
+            padding: 20px;
             text-align: center;
-            color: #555;
+            color: #777777;
+            font-size: 13px;
+            border-top: 1px solid #e0e0e0;
         }
-        .important {
-            font-weight: bold;
-            color: #d9534f;
+        .footer p {
+            margin: 0;
+        }
+        .logo {
+            margin-bottom: 20px;
+            max-width: 150px; /* Ajuste conforme o tamanho do seu logo */
+            height: auto;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media only screen and (max-width: 620px) {
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .content, .header, .footer {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .button {
+                padding: 10px 20px;
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>Notificação de Tarefa</h1>
-    </div>
-    <div class="content">
-        <p>Aviso: Sua tarefa <span class="important" th:text="${nomeTarefa}">Nome da Tarefa</span> está agendada para hoje às <span class="important" th:text="${dataEvento}">Horário</span>.</p>
-        <p>Confira sua descrição:</p>
-        <p th:text="${descricao}">Descrição da Tarefa</p>
-    </div>
-    <div class="footer">
-        <p>Obrigado por usar nosso sistema de tarefas.</p>
-    </div>
-</div>
+<center>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f7f7f7;">
+        <tr>
+            <td align="center" valign="top">
+                <div class="container">
+                    <table class="header" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td align="center">
+                                <h1>Lembrete de Tarefa</h1>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="content" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td valign="top">
+                                <p>Olá,</p>
+                                <p>Este é um lembrete importante sobre uma tarefa agendada:</p>
+
+                                <div class="task-details">
+                                    <p><strong>Tarefa:</strong> <span class="highlight" th:text="${nomeTarefa}">Nome da Tarefa</span></p>
+                                    <p><strong>Agendado para:</strong> <span class="highlight" th:text="${#temporals.format(dataEvento, 'dd-MM-yyyy HH:mm:ss')}">Horário</span></p>
+                                </div>
+
+                                <p>Abaixo, você encontrará mais detalhes sobre esta tarefa:</p>
+                                <p th:text="${descricao}">Descrição da Tarefa</p>
+
+                                <div class="button-container">
+                                    <a href="URL_PARA_VISUALIZAR_TAREFA" class="button" target="_blank" rel="noopener noreferrer">Ver Detalhes da Tarefa</a>
+                                </div>
+
+                                <p>Por favor, certifique-se de completar esta tarefa a tempo.</p>
+                                <p>Se tiver alguma dúvida, não hesite em nos contatar.</p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="footer" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td align="center">
+                                <p>Atenciosamente,</p>
+                                <p>A Equipe do Seu Sistema de Tarefas</p>
+                                <p><a href="URL_DO_SEU_SITE" style="color: #4A90E2; text-decoration: none;">Visite nosso site</a></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</center>
 </body>
 </html>
